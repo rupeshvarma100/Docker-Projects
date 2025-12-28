@@ -25,8 +25,6 @@ Project 2
 cd project2
 docker compose up --build -d
 
-text
-
 ---
 
 ## 📁 Structure
@@ -36,14 +34,11 @@ text
 ├── project2/ # Multi-service
 
 
-text
-
 ## 🛠️ Prerequisites
 - Docker & Docker Compose
 
 ## 🔍 Check Status
 docker ps
 
-text
 
 **Copy-paste ready for your learning repo root README.md**
