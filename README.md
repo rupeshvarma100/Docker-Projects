@@ -8,8 +8,8 @@ These 5 hands-on projects teach core Docker skills progressively:
 
 ## 📋 Projects
 
-| # | Project | Skill | Access |
-|---|---------|-------|--------|
+| # | Project | Skill |
+|---|---------|-------|
 | 1 | Static Nginx Website | Single container 
 | 2 | Flask + Redis App | Multi-service Compose
 
