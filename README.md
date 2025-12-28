@@ -39,6 +39,3 @@ docker compose up --build -d
 
 ## 🔍 Check Status
 docker ps
-
-
-**Copy-paste ready for your learning repo root README.md**
