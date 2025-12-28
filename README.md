@@ -30,9 +30,8 @@ text
 ---
 
 ## 📁 Structure
-.
-├── project1/ # Single container
 
+├── project1/ # Single container
 ├── project2/ # Multi-service
 
 
