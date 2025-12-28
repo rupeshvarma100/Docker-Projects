@@ -10,8 +10,8 @@ These 5 hands-on projects teach core Docker skills progressively:
 
 | # | Project | Skill | Access |
 |---|---------|-------|--------|
-| 1 | Static Nginx Website | Single container | http://localhost |
-| 2 | Flask + Redis App | Multi-service Compose | http://localhost:5000 |
+| 1 | Static Nginx Website | Single container 
+| 2 | Flask + Redis App | Multi-service Compose
 
 ---
 
@@ -32,8 +32,9 @@ text
 ## 📁 Structure
 .
 ├── project1/ # Single container
+
 ├── project2/ # Multi-service
-└── README.md
+
 
 text
 
