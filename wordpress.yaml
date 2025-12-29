@@ -1,0 +1,39 @@
+# Creates WordPress container and links to db container via user-defined network project3-net
+# Video at https://www.youtube.com/watch?v=NdwB5TPXCnQ explains the file
+services:
+  wordpress:
+    image: wordpress:php8.1-apache
+    container_name: wordpress
+    hostname: wordpress
+    restart: always
+    # Connect to the database container's network
+    networks:
+      - project3-net
+    ports:
+      # Exposes an external port 8080 to an internal container port 80
+      - 8081:80
+    environment:
+      # This variable points this container to the container called db for database
+      WORDPRESS_DB_HOST: db
+      # Root user so we don't have to add a new user for each service to database
+      # (but you can name one with own password, just don't forget to create user in database before running the container)
+      WORDPRESS_DB_USER: admin
+      # Database user's password (if not root user, then set for user)
+      WORDPRESS_DB_PASSWORD: password
+      # Just make sure you create an empty database in MariaDB with this name first before spinning up this stack
+      WORDPRESS_DB_NAME: wordpress
+    volumes:
+      # Sets a persistent volume called wordpress which maps inside the container as /var/www/html
+      - wordpress:/var/www/html
+ 
+volumes:
+  # Create volume called wordpress for persistent storage
+  wordpress:
+    # Specify name so it does not append stack name and become wordpress_wordpress
+    name: wordpress
+networks:
+  project3-net:
+    # Joins existing network of this name (it was created by db container)
+    external: true
+    # Specify name so that it does not append stack name
+    name: project3-net
