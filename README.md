@@ -27,13 +27,17 @@ This video shows how to use Docker Compose to run two services together: a Pytho
  
 In this One Database service for Multiple Docker container Services video, the author shows how to run a single database container and let multiple application containers connect to it. You set up MySQL or another database once in Docker, and each service runs in its own container but connects to the same database through a shared Docker network or proper port mapping. You learn how to configure networking, expose the database port, and link containers for secure communication. This approach helps save resources by centralizing databases and also teaches when a shared database works best versus separate instances.
 
+
+
 ## 📁 Structure
 
 ├── project1/ # Single container
 
 ├── project2/ # Multi-service
 
-├── project2/ # One Database Shared by Multiple Containers
+├── project3/ # One Database Shared by Multiple Containers
+
+
 
 
 **🙏 Thanks to [KDnuggets' 5 Fun Docker Projects](https://www.kdnuggets.com/5-fun-docker-projects-for-absolute-beginners)
