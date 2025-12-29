@@ -1,125 +1,143 @@
-Demonstrates shared database architecture using Portainer stacks—one MariaDB + phpMyAdmin serving multiple app containers (WordPress, Nextcloud, etc.) via custom network.
-​
+# Project-3: Shared MariaDB + WordPress via Custom Network
 
-Architecture Overview
+[![YouTube Video](https://img.youtube.com/vi/NdwB5TPXCnQ/0.jpg)](https://www.youtube.com/watch?v=NdwB5TPXCnQ)  
+**Video Tutorial**: [One Database for Multiple Docker Services](https://www.youtube.com/watch?v=NdwB5TPXCnQ) [attached_file:1]
+
+Demonstrates shared database architecture using Portainer stacks—**one MariaDB + phpMyAdmin** serving **multiple app containers** (WordPress, Nextcloud, etc.) via custom network.
+
+## Architecture Overview
+
+┌─────────────────┐ ┌──────────────────┐ ┌─────────────────┐
+│ phpMyAdmin │◄──►│ MariaDB (db) │◄──►│ WordPress │
+│ localhost:7000 │ │ project3-net │ │ localhost:8081 │
+└─────────────────┘ └──────────────────┘ └─────────────────┘
+↑
+Shared Network + Volumes
+
 text
-┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-│   phpMyAdmin    │◄──►│   MariaDB (db)   │◄──►│  WordPress      │
-│   localhost:7000│    │   project3-net   │    │  localhost:8081 │
-└─────────────────┘    └──────────────────┘    └─────────────────┘
-                              ↑
-                       Shared Network + Volumes
-Services Breakdown
-Service	Image	Purpose	Ports	Volume	Network
-db	mariadb:12.2.1-ubi10-rc	Persistent MariaDB database	None (internal)	db:/var/lib/mysql	project3-net
-phpmyadmin	phpmyadmin:latest	Web-based DB management	7000:80	None	project3-net
-wordpress	wordpress:php8.1-apache	WordPress CMS	8081:80	wordpress:/var/www/html	project3-net (external)
-Step-by-Step Deployment
-1. Prerequisites
-bash
+
+## Services Breakdown
+
+| Service     | Image                    | Purpose                | Ports     | Volume                | Network       |
+|-------------|--------------------------|------------------------|-----------|-----------------------|---------------|
+| **db**      | `mariadb:12.2.1-ubi10-rc` | Persistent MariaDB DB | None (internal) | `db:/var/lib/mysql` | `project3-net` |
+| **phpmyadmin** | `phpmyadmin:latest`    | Web-based DB management | `7000:80` | None                 | `project3-net` |
+| **wordpress** | `wordpress:php8.1-apache` | WordPress CMS       | `8081:80` | `wordpress:/var/www/html` | `project3-net` (external) |
+
+## Step-by-Step Deployment
+
+### 1. Prerequisites
 cd "D:\Rupesh Study Material\Docker\Docker-Projects\Project-3"
-# Ensure Docker Desktop + WSL/Fedora backend [memory:8]
-2. Deploy Database Stack (FIRST)
-bash
-docker compose -f db.yaml up -d
-Creates:
 
-project3-net (user-defined shared network)
-​
-
-db volume (persistent /var/lib/mysql)
-​
-
-db container (MariaDB 12.2.1 UBI)
-​
-
-phpmyadmin (port 7000)
-​
-
-Verify: docker compose -f db.yaml ps
-
-3. Setup Database via phpMyAdmin
+Ensure Docker Desktop + WSL/Fedora backend
 text
+
+### 2. Deploy Database Stack **(FIRST)**
+docker compose -f db.yaml up -d
+
+text
+
+**Creates**:
+- `project3-net` (user-defined shared network)
+- `db` volume (persistent `/var/lib/mysql`)
+- `db` container (MariaDB 12.2.1 UBI)
+- `phpmyadmin` (port 7000)
+
+**Verify**: `docker compose -f db.yaml ps`
+
+### 3. Setup Database via phpMyAdmin
 http://localhost:7000
 Login: root / password
-sql
+
+text
+undefined
 CREATE DATABASE wordpress CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE USER 'admin'@'%' IDENTIFIED BY 'password';
 GRANT ALL PRIVILEGES ON wordpress.* TO 'admin'@'%';
 FLUSH PRIVILEGES;
-Note: Leave table name blank during DB creation.
-​
 
-4. Deploy WordPress Stack (SECOND)
-bash
+text
+
+**Note**: Leave table name **blank** during DB creation.
+
+### 4. Deploy WordPress Stack **(SECOND)**
 docker compose -f wordpress.yaml up -d
-Joins:
 
-Existing project3-net (external: true)
-​
-
-Resolves db hostname via network
-​
-
-Creates wordpress volume (/var/www/html)
-​
-
-Verify: docker compose -f wordpress.yaml ps
-
-5. Complete WordPress Setup
 text
+
+**Joins**:
+- Existing `project3-net` (`external: true`)
+- Resolves `db` hostname via network
+- Creates `wordpress` volume (`/var/www/html`)
+
+**Verify**: `docker compose -f wordpress.yaml ps`
+
+### 5. Complete WordPress Setup
 http://localhost:8081 → Follow 5-step wizard
-6. Test Connectivity
-bash
-docker exec -it wordpress ping db              # ✅ Network
-docker exec -it wordpress wp db check          # ✅ Database
-Key Docker Concepts Explained
-Networks: project3-net
+
 text
-db.yaml:     networks: project3-net: name: project3-net     # CREATES
-wordpress.yaml: networks: project3-net: external: true      # JOINS
-User-defined bridge network enables service discovery by container name (db)
-​
 
-Prevents stack name prefixing (db_project3-net)
-​
+### 6. Test Connectivity
+docker exec -it wordpress ping db # ✅ Network
+docker exec -it wordpress wp db check # ✅ Database
 
-Isolates from Project-1/Project-2
-
-Volumes: Persistent Storage
 text
-db:      name: db              → docker volume inspect db
-wordpress: name: wordpress     → docker volume inspect wordpress
-Named volumes survive container restarts
-​
 
-db:/var/lib/mysql → MariaDB data
+## Key Docker Concepts Explained
 
-wordpress:/var/www/html → WP files/uploads
+### Networks: `project3-net`
+db.yaml:
+networks:
+project3-net:
+name: project3-net # CREATES
 
-Container Naming
+wordpress.yaml:
+networks:
+project3-net:
+external: true # JOINS
+name: project3-net
+
 text
-container_name: db          # Clean names (no stack prefix) [attached_file:1]
-hostname: db                # DNS resolution on network
-Management Commands
-bash
-# Individual stack control
+
+- User-defined bridge network enables service discovery by container name (`db`)
+- Prevents stack name prefixing (`db_project3-net`)
+- Isolates from Project-1/Project-2
+
+### Volumes: Persistent Storage
+db: name: db → docker volume inspect db
+wordpress: name: wordpress → docker volume inspect wordpress
+
+text
+
+- Named volumes survive container restarts
+- `db:/var/lib/mysql` → MariaDB data
+- `wordpress:/var/www/html` → WP files/uploads
+
+### Container Naming
+container_name: db # Clean names (no stack prefix)
+hostname: db # DNS resolution on network
+
+text
+
+## Management Commands
+Individual stack control
 docker compose -f db.yaml restart
 docker compose -f wordpress.yaml down
 
-# Network inspection
+Network inspection
 docker network inspect project3-net
 
-# Logs
+Logs
 docker compose -f wordpress.yaml logs -f
-Scaling Pattern
-Add more stacks (Nextcloud, LimeSurvey):
 
 text
-# nextcloud.yaml
+
+## Scaling Pattern
+Add more stacks (Nextcloud, LimeSurvey):
+nextcloud.yaml
 networks:
-  project3-net:
-    external: true
-    name: project3-net
+project3-net:
+external: true
+name: project3-net
 environment:
-  MYSQL_HOST: db  # Same DB!
+MYSQL_HOST: db # Same DB!
