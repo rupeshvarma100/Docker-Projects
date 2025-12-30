@@ -27,12 +27,10 @@ Demonstrates shared database architecture using Portainer stacks—**one MariaDB
 cd "D:\Rupesh Study Material\Docker\Docker-Projects\Project-3"
 
 Ensure Docker Desktop + WSL/Fedora backend
-text
 
 ### 2. Deploy Database Stack **(FIRST)**
 docker compose -f db.yaml up -d
 
-text
 
 **Creates**:
 - `project3-net` (user-defined shared network)
@@ -46,41 +44,36 @@ text
 http://localhost:7000
 Login: root / password
 
-text
-undefined
 CREATE DATABASE wordpress CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
 CREATE USER 'admin'@'%' IDENTIFIED BY 'password';
 GRANT ALL PRIVILEGES ON wordpress.* TO 'admin'@'%';
 FLUSH PRIVILEGES;
 
-text
 
 **Note**: Leave table name **blank** during DB creation.
 
 ### 4. Deploy WordPress Stack **(SECOND)**
 docker compose -f wordpress.yaml up -d
 
-text
 
 **Joins**:
 - Existing `project3-net` (`external: true`)
 - Resolves `db` hostname via network
 - Creates `wordpress` volume (`/var/www/html`)
+  
 
 **Verify**: `docker compose -f wordpress.yaml ps`
+
 
 ### 5. Complete WordPress Setup
 http://localhost:8081 → Follow 5-step wizard
 
-text
+
 
 ### 6. Test Connectivity
 docker exec -it wordpress ping db # ✅ Network
 docker exec -it wordpress wp db check # ✅ Database
 
-text
-
-## Key Docker Concepts Explained
 
 ### Networks: `project3-net`
 db.yaml:
@@ -88,46 +81,46 @@ networks:
 project3-net:
 name: project3-net # CREATES
 
+
 wordpress.yaml:
 networks:
 project3-net:
 external: true # JOINS
 name: project3-net
 
-text
 
 - User-defined bridge network enables service discovery by container name (`db`)
 - Prevents stack name prefixing (`db_project3-net`)
-- Isolates from Project-1/Project-2
+- 
 
 ### Volumes: Persistent Storage
 db: name: db → docker volume inspect db
 wordpress: name: wordpress → docker volume inspect wordpress
 
-text
 
 - Named volumes survive container restarts
 - `db:/var/lib/mysql` → MariaDB data
 - `wordpress:/var/www/html` → WP files/uploads
 
+
 ### Container Naming
 container_name: db # Clean names (no stack prefix)
 hostname: db # DNS resolution on network
 
-text
 
 ## Management Commands
-Individual stack control
+Individual stack control:
 docker compose -f db.yaml restart
 docker compose -f wordpress.yaml down
 
-Network inspection
+
+Network inspection:
 docker network inspect project3-net
 
-Logs
+
+Logs:
 docker compose -f wordpress.yaml logs -f
 
-text
 
 ## Scaling Pattern
 Add more stacks (Nextcloud, LimeSurvey):
