@@ -8,9 +8,9 @@ These 5 hands-on projects teach core Docker skills progressively:
 
 | # | Project | Skill | Status |
 |---|---------|-------|--------|
-| 1 | Static Nginx Website | Single container | ✅ Complete |
-| 2 | Flask + Redis App | Multi-service Compose | ✅ Complete |
-| 3 | Shared MariaDB + WordPress | Custom networks + Shared DB | ✅ Complete |
+| 1 | Static Nginx Website | Single container |
+| 2 | Flask + Redis App | Multi-service Compose |
+| 3 | Shared MariaDB + WordPress | Custom networks + Shared DB |
 ---
 
 ## 🚀 Quick Start
@@ -35,7 +35,7 @@ In this One Database service for Multiple Docker container Services video, the a
 
 ├── project2/ # Multi-service
 
-├── project3/ # One Database Shared by Multiple Containers
+├── project3/ # One Database Shared by Multiple Containers  
 
 
 
