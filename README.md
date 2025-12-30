@@ -35,7 +35,7 @@ In this One Database service for Multiple Docker container Services video, the a
 
 ├── project2/ # Multi-service
 
-├── project3/ # One Database Shared by Multiple Containers  \\
+├── project3/ # One Database Shared by Multiple Containers
 
 
 
