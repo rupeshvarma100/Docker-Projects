@@ -13,11 +13,6 @@ Demonstrates shared database architecture using Portainer stacks—**one MariaDB
     │ localhost:7000  │      │ project3-net     │      │ localhost:8081  │
     └─────────────────┘      └──────────────────┘      └─────────────────┘
 
-  ↑
-    Shared Network + Volumes
-
-text
-
 ## Services Breakdown
 
 | Service     | Image                    | Purpose                | Ports     | Volume                | Network       |
