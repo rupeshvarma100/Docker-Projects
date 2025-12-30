@@ -27,6 +27,14 @@ This video shows how to use Docker Compose to run two services together: a Pytho
  
 In this One Database service for Multiple Docker container Services video, the author shows how to run a single database container and let multiple application containers connect to it. You set up MySQL or another database once in Docker, and each service runs in its own container but connects to the same database through a shared Docker network or proper port mapping. You learn how to configure networking, expose the database port, and link containers for secure communication. This approach helps save resources by centralizing databases and also teaches when a shared database works best versus separate instances.
 
+# 4. Automated Continuous Integration with Jenkins in Docker
+ 
+ # These projects is on how to build a complete continuous integration (CI) pipeline using Jenkins inside Docker to automatically create Docker images when code changes. 
+ 
+   The first Project is to Build & Push React Docker Image with a Jenkins Pipeline, setting up the Jenkins container, creating a pipeline to pull source code, build a Docker image, and optionally run tests or    push the image to a registry. 
+   The second project, Automated CI with Jenkins on Docker to Build Docker Images, focuses on a React app, how to connect Jenkins to the source repository, build and tag Docker images, and push them automatically. 
+   
+Both projects show how containerizing Jenkins keeps your build environment isolated, reproducible, and consistent. Once set up, every code update triggers a fresh build, making deployments reliable and automated.
 
 
 ## 📁 Structure
