@@ -8,8 +8,20 @@ Demonstrates shared database architecture using Portainer stacks—**one MariaDB
 ## Architecture Overview
 
   ┌─────────────────┐    ┌──────────────────┐    ┌─────────────────┐
-  │ phpMyAdmin      │◄──►│ MariaDB (db)     │◄──►│ WordPress       │
-  │ localhost:7000  │    │ project3-net     │    │ localhost:8081  │
+  │ phpMyAdmin 
+  
+  │◄──►│ MariaDB (db) 
+  
+  │◄──►│ WordPress 
+  
+  │
+  │ localhost:7000
+  
+  │    │ project3-net
+  
+  │    │ localhost:8081
+  
+  │
   └─────────────────┘    └──────────────────┘    └─────────────────┘
   ↑
     Shared Network + Volumes
