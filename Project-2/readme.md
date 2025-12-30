@@ -26,11 +26,17 @@ Make sure you have:
 ## 📁 Directory Structure
 .
 ├── app/
+
 │ ├── app.py # Flask application
+
 │ ├── requirements.txt
+
 │ └── Dockerfile # Flask service build
+
 ├── docker-compose.yml # Multi-service configuration
+
 └── README.md
+
 
 text
 
