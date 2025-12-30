@@ -30,7 +30,7 @@ In this One Database service for Multiple Docker container Services video, the a
 # 4. Automated Continuous Integration with Jenkins in Docker
 
  
- # These projects is on how to build a complete continuous integration (CI) pipeline using Jenkins inside Docker to automatically create Docker images when code changes. 
+** These projects is on how to build a complete continuous integration (CI) pipeline using Jenkins inside Docker to automatically create Docker images when code changes. 
  
    The first Project is to Build & Push React Docker Image with a Jenkins Pipeline, setting up the Jenkins container, creating a pipeline to pull source code, build a Docker image, and optionally run tests or    push the image to a registry.
    
@@ -50,9 +50,8 @@ Both projects show how containerizing Jenkins keeps your build environment isola
 ├── project3/ # One Database Shared by Multiple Containers
 
 
-
-
 **🙏 Thanks to [KDnuggets' 5 Fun Docker Projects](https://www.kdnuggets.com/5-fun-docker-projects-for-absolute-beginners)
 **    Thanks to Orihinal content creators and thier video refence mentioned in KDnuggets.com page.
+
 
 **📹 Disclaimer**:  Original content creators retain full ownership of their videos and materials.
